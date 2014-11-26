@@ -1,0 +1,42 @@
+# vim: sts=2 ts=2 sw=2 et ai
+{% set zabbixscripts  = salt['grains.filter_by']({
+  'Debian': {
+    'bash': '/bin/bash',
+    'include':{ 
+      'sudo': '/usr/bin/sudo',
+      'smart': "/usr/sbin/smartctl",
+      'mysql': "/usr/bin/mysql",
+      'mysqlcachefile': "/tmp/mysqlstat.cache",
+      'mysqlcachettl': "1",
+      'apachecachefile': "/tmp/apachestat.cache",
+      'apachettl': "290",
+      'apachestatus': "/usr/bin/curl -s http://localhost/server-status?auto",
+      },
+  },
+  'Freebsd': {
+    'bash': '/usr/local/bin/bash',
+    'include':{ 
+      'sudo': '/usr/local/bin/sudo',
+      'smart': "/usr/local/sbin/smartctl",
+      'mysql': "/usr/local/bin/mysql",
+      'mysqlcachefile': "/tmp/mysqlstat.cache",
+      'mysqlcachettl': "1",
+      'apachecachefile': "/tmp/apachestat.cache",
+      'apachettl': "290",
+      'apachestatus': "/usr/bin/curl -s http://localhost/server-status?auto",
+      },
+  },
+  'default': {
+    'bash': '/bin/bash',
+    'include':{ 
+      'sudo': '/usr/bin/sudo',
+      'smart': "/usr/sbin/smartctl",
+      'mysql': "/usr/bin/mysql",
+      'mysqlcachefile': "/tmp/mysqlstat.cache",
+      'mysqlcachettl': "1",
+      'apachecachefile': "/tmp/apachestat.cache",
+      'apachettl': "290",
+      'apachestatus': "/usr/bin/curl -s http://localhost/server-status?auto",
+      },
+  },
+}, merge=salt['pillar.get']('zabbix-scripts')) %}
