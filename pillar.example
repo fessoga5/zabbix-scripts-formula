@@ -1,5 +1,5 @@
 # vim: sts: 2 ts: 2 sw: 2 et ai
-zabbix-scripts-formula:
+zabbix-scripts:
   include:
     sudo: "/usr/local/bin/sudo"
     smart: "/usr/local/sbin/smartctl"

@@ -13,9 +13,7 @@
         data: {{ zabbixscripts.get("include",[]) }}
         bash: {{ zabbixscripts.bash }}
 
-{% if zabbixscripts.repos is defined %}
-
-{%- for repo in zabbixscripts.get("repos",[]) %}
+{% for repo in zabbixscripts.get("repos",[]) %}
 
 {{repo}}:
   file.directory:
@@ -32,5 +30,10 @@
 "/etc/zabbix/zabbix_agentd.conf.d/zabbix-scripts-{{repo}}.conf":
   file.symlink:
     - target: "/etc/zabbix/scripts/{{repo}}/zabbix-scripts-{{repo}}.conf"
+
+"crontab -u root /etc/zabbix/scripts/{{repo}}/crontab":
+  cmd.run:
+    - user: root
+    - onlyif: "ls /etc/zabbix/scripts/{{repo}}/crontab"
+
 {% endfor %}
-{% endif %}
