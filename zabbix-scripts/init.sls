@@ -1,6 +1,9 @@
 # vim: sts=2 ts=2 sw=2 et ai
 {% from "zabbix-scripts/map.jinja" import zabbixscripts with context %}
 
+git:
+  pkg.installed
+
 "/etc/zabbix/scripts/incl.sh":
   file.managed:
     - source: salt://zabbix-scripts/files/incl.sh
@@ -15,7 +18,7 @@
 
 {% for repo in zabbixscripts.get("repos",[]) %}
 
-{{repo}}:
+zabbix-{{repo}}:
   file.directory:
     - name: /etc/zabbix/scripts/{{ repo }}
     - user: root 
