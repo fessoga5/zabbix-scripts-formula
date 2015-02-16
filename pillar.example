@@ -12,7 +12,7 @@ zabbix-scripts:
     apachestatus: "/usr/bin/curl -s http://localhost/server-status?auto"
   repos:
     - mysql:
-      - user: zabbix
+        user: 'zabbix'
     - kvm
     - raid
     - apache
