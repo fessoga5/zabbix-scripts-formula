@@ -16,7 +16,7 @@ git:
         data: {{ zabbixscripts.get("include",[]) }}
         bash: {{ zabbixscripts.bash }}
 
-{% for repo,value in zabbixscripts.get("repos",[]).iteritems() %}
+{% for repo,value in zabbixscripts.repos.iteritems()|default([]) %}
 
 zabbix-{{repo}}:
   file.directory:
