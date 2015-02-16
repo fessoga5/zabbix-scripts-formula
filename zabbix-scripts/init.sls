@@ -35,7 +35,7 @@ zabbix-{{repo}}:
     - target: "/etc/zabbix/scripts/{{repo}}/zabbix-scripts-{{repo}}.conf"
 
 # add jobs to current root crontab if it is required
-"(crontab -u root -l && cat /etc/zabbix/scripts/{{repo}}/crontab) | crontab -u root -":
+"(crontab -u root -l ; cat /etc/zabbix/scripts/{{repo}}/crontab) | crontab -u root -":
   cmd.run:
     - user: root
     - onlyif: "ls /etc/zabbix/scripts/{{repo}}/crontab"
