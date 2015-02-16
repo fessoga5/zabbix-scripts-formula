@@ -16,19 +16,19 @@ git:
         data: {{ zabbixscripts.get("include",[]) }}
         bash: {{ zabbixscripts.bash }}
 
-{% for repo in zabbixscripts.get("repos",[]) %}
+{% for repo,value in zabbixscripts.get("repos",[]).iteritems() %}
 
 zabbix-{{repo}}:
   file.directory:
     - name: /etc/zabbix/scripts/{{ repo }}
-    - user: {{ repo.user|default('zabbix') }} 
+    - user: {{ value.user|default('zabbix') }} 
     - mode: 775
     - makedirs: True
   git.latest:
     - name: ssh://gitolite@git02.core.irknet.lan/zabbix-scripts-{{repo}}.git
     - rev: master 
     - target: /etc/zabbix/scripts/{{ repo }} 
-    - user: {{ repo.user|default('zabbix') }} 
+    - user: {{ value.user|default('zabbix') }} 
 
 "/etc/zabbix/zabbix_agentd.conf.d/zabbix-scripts-{{repo}}.conf":
   file.symlink:
