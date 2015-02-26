@@ -1,8 +1,10 @@
 # vim: sts=2 ts=2 sw=2 et ai
 {% from "zabbix-scripts/map.jinja" import zabbixscripts with context %}
 
-git:
-  pkg.installed
+zabbix-scripts-formula_git:
+  pkg.installed:
+    - pkgs:
+      - git 
 
 "/etc/zabbix/scripts/incl.sh":
   file.managed:
