@@ -27,7 +27,7 @@ zabbix-{{repo}}:
     - mode: 775
     - makedirs: True
   git.latest:
-    - name: ssh://{{ value.repopath | default("gitolite@git02.core.irknet.lan") }}/zabbix-scripts-{{repo}}.git
+    - name: {{ value.repopath | default("ssh://gitolite@git02.core.irknet.lan") }}/zabbix-scripts-{{repo}}.git
     - rev: master 
     - target: /etc/zabbix/scripts/{{ repo }} 
     - user: {{ value.user|default('zabbix') }} 
