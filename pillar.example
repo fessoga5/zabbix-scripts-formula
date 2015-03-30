@@ -13,6 +13,9 @@ zabbix-scripts:
   repos:
     - mysql:
         user: 'zabbix'
-    - kvm
-    - raid
-    - apache
+    - kvm:
+        config: |
+          user: artem
+          password: artem
+    - raid:
+    - apache:
