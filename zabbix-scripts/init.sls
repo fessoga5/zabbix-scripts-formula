@@ -33,18 +33,20 @@ zabbix-{{repo}}:
     - user: {{ value.user|default('zabbix') }} 
 
 {% if value.config is not defined %}
-zabbix-scripts_{{value.config}}:
+{% for name_config, data in value.config.iteritems() %}
+zabbix-scripts_{{name_config}}:
   file.managed:
-    - name: /etc/zabbix/scripts/{{ repo }}
+    - name: /etc/zabbix/scripts/{{ repo }}/{{name_config}}
     - user: {{ value.user|default('zabbix') }}
     - source: salt://zabbix-scripts/files/config.tmpl
     - mode: 775
     - template: jinja
     - context: 
         data:
-          {% for item in value.config.split('\n') %}
+          {% for item in data.split('\n') %}
           - "{{ item }}"
           {% endfor %}
+{% endfor %}
 {% endif %}
 
 "/etc/zabbix/zabbix_agentd.conf.d/zabbix-scripts-{{repo}}.conf":
