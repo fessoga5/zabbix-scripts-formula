@@ -32,6 +32,21 @@ zabbix-{{repo}}:
     - target: /etc/zabbix/scripts/{{ repo }} 
     - user: {{ value.user|default('zabbix') }} 
 
+{% if value.config is not defined %}
+zabbix-scripts_{{value.config}}:
+  file.managed:
+    - name: /etc/zabbix/scripts/{{ repo }}
+    - user: {{ value.user|default('zabbix') }}
+    - source: salt://zabbix-scripts/files/config.tmpl
+    - mode: 775
+    - template: jinja
+    - context: 
+        data:
+          {% for item in value.config.split('\n') %}
+          - "{{ item }}"
+          {% endfor %}
+{% endif %}
+
 "/etc/zabbix/zabbix_agentd.conf.d/zabbix-scripts-{{repo}}.conf":
   file.symlink:
     - target: "/etc/zabbix/scripts/{{repo}}/zabbix-scripts-{{repo}}.conf"
