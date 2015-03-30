@@ -32,8 +32,8 @@ zabbix-{{repo}}:
     - target: /etc/zabbix/scripts/{{ repo }} 
     - user: {{ value.user|default('zabbix') }} 
 
-{% if value.config is not defined %}
-{% for name_config, data in value.config.iteritems() %}
+{% if value.config is defined %}
+{% for name_config, data in value.config.iteritems()|default([]) %}
 zabbix-scripts_{{name_config}}:
   file.managed:
     - name: /etc/zabbix/scripts/{{ repo }}/{{name_config}}
