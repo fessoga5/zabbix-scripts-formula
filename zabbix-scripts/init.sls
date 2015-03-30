@@ -6,7 +6,6 @@ zabbix-scripts-formula_git:
     - pkgs:
       - git 
       - python-yaml
-      - time
 
 "/etc/zabbix/scripts/incl.sh":
   file.managed:
