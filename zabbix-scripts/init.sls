@@ -5,6 +5,7 @@ zabbix-scripts-formula_git:
   pkg.installed:
     - pkgs:
       - git 
+      - python-yaml
 
 "/etc/zabbix/scripts/incl.sh":
   file.managed:
