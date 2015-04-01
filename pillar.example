@@ -14,6 +14,7 @@ zabbix-scripts:
     - mysql:
         user: 'zabbix'
     - kvm:
+        repopath: "ssh://git@git.ru/repo.git"
         config:
           "nameconfig": |
             user: artem
