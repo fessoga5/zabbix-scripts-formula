@@ -1,11 +1,11 @@
 # vim: sts=2 ts=2 sw=2 et ai
-{% set zabbixscripts  = salt['grains.filter_by']({
+{% set zabbixlookup  = salt['grains.filter_by']({
   'Debian': {
-    pkgs: ["python-yaml","git"],
-    repopath: "https://github.com/fessoga5",
+    'repopath': "https://github.com/fessoga5",
+    'pkgs': ["python-yaml","git"]
   },
   'default': {
-    pkgs: ["python-yaml","git"],
-    repopath: "https://github.com/fessoga5",
+    'pkgs': ["python-yaml","git"],
+    'repopath': "https://github.com/fessoga5",
   },
 }, merge=salt['pillar.get']('zabbix-scripts:lookup')) %}

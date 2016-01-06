@@ -19,7 +19,7 @@ zabbix-{{repo}}:
     - mode: 775
     - makedirs: True
   git.latest:
-    - name: {{ path | default( value.repopath ~ "zabbix-scripts-" ~ repo ~ ".git" ) }}
+    - name: {{ path | default( zabbixlookup.repopath ~ "/zabbix-scripts-" ~ repo ~ ".git" ) }}
     - rev: master 
     - target: /etc/zabbix/scripts/{{ repo }} 
     - user: {{ value.user|default('zabbix') }} 
