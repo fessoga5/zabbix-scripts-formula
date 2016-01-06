@@ -1,25 +1,16 @@
 # vim: sts=2 ts=2 sw=2 et ai
-{% from "zabbix-scripts/map.jinja" import zabbixscripts with context %}
+{% from "zabbix-scripts/map.jinja" import zabbixlookup with context %}
+{% set zabbixpillar = pillar.get("zabbix-scripts").repos %}
 
 zabbix-scripts-formula_git:
   pkg.installed:
     - pkgs:
-      - git 
-      - python-yaml
+      {%- for pkg in zabbixlookup.pkgs %}
+      - {{pkg}}
+      {%- endfor %}
 
-"/etc/zabbix/scripts/incl.sh":
-  file.managed:
-    - source: salt://zabbix-scripts/files/incl.sh
-    - user: root
-    - group: root
-    - mode: 775
-    - makedirs: True
-    - template: jinja
-    - context:
-        data: {{ zabbixscripts.get("include",[]) }}
-        bash: {{ zabbixscripts.bash }}
 
-{% for repo,value in zabbixscripts.repos.iteritems()|default([]) %}
+{% for repo,value in zabbixpillar.items() | default([]) %}
 
 zabbix-{{repo}}:
   file.directory:
@@ -28,7 +19,7 @@ zabbix-{{repo}}:
     - mode: 775
     - makedirs: True
   git.latest:
-    - name: {{ value.repopath | default("ssh://gitolite@git02.core.irknet.lan") }}/zabbix-scripts-{{repo}}.git
+    - name: {{ path | default( value.repopath ~ "zabbix-scripts-" ~ repo ~ ".git" ) }}
     - rev: master 
     - target: /etc/zabbix/scripts/{{ repo }} 
     - user: {{ value.user|default('zabbix') }} 
